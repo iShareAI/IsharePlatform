@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>iShare® – Empowering Charities with Immersive VR & AI Donor Engagement</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+  <!-- favicon (PNG) -->
+  <link rel="icon" type="image/png" href="img/favicon_32x322.png">
+
+  <style>
+/* =========================
+   GLOBAL / RESET
+   ========================= */
+:root{
+  --maxw: 1180px;
+  --page-pad: 28px;
+  --header-pad-x: 26px;
+  --header-pad-y: 12px;
+
+  --overlay: 0.10;
+  --neonA: rgba(102,204,255,.95);
+  --neonB: rgba(243,92,163,.95);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html, body{
+  font-family: 'Staatliches', sans-serif;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body{
+  background:#fff;
+  color:#000;
+}
+
+/* ✅ ISHARE-safe scoping (keeps structure 1:1, avoids global side effects) */
+.ishare-landing{
+  scroll-snap-type: y mandatory;
+}
+
+/* Общий контейнер для выравнивания (хедер + hero текст) */
+.align-container{
+  width: min(var(--maxw), calc(100% - var(--page-pad)));
+  margin: 0 auto;
+  padding-left: var(--header-pad-x);
+  padding-right: var(--header-pad-x);
+  box-sizing: border-box;
+}
+
+/* =========================
+   SECTIONS / VIDEO
+   ========================= */
+.ishare-landing section{
+  height: 100vh;
+  position: relative;
+  color: white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  scroll-snap-align:start;
+}
+
+.video-bg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,var(--overlay));
+  z-index:-1;
+  pointer-events:none;
+}
+
+/* keep video overflow contained */
+.ishare-landing section#hero,
+.ishare-landing section#sec2{
+  overflow:hidden;
+  justify-content:flex-start;
+  align-items:stretch;
+}
+
+#hero .content,
+#sec2 .content{
+  width:100%;
+}
+
+.content{
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  min-height:100vh;
+  padding-top: 10vh;
+}
+
+/* =========================
+   HERO
+   ========================= */
+.logo{
+  width:40vw;
+  max-width:300px;
+}
+
+.hero-copy{
+  margin-top: 12vh;
+  text-align:left;
+  max-width:700px;
+  position: relative;
+  padding-bottom: 78px;
+}
+
+.hero-title{
+  font-size:1.8rem;
+  margin-bottom:10px;
+}
+.hero-subtitle{
+  font-size:1.1rem;
+  margin-bottom:30px;
+  color:aqua;
+}
+
+@media (min-width:768px){
+  .hero-title{ font-size:2.5rem; }
+  .hero-subtitle{ font-size:1.3rem; }
+}
+
+.fade{ opacity:1; transition: opacity .9s ease-in-out; }
+.fade-out{ opacity:0; }
+
+.cta-button{
+  margin-top:20px;
+  padding:12px 32px;
+  font-size:1.3rem;
+  font-family:'Staatliches', sans-serif;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  background:transparent;
+  color:white;
+  border:.5px solid white;
+  border-radius:40px;
+  cursor:pointer;
+  transition:.3s;
+}
+.cta-button:hover{
+  background:white;
+  color:black;
+}
+
+/* Footnote */
+.footnote-block{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom: 18px;
+  margin:0 !important;
+  max-width:700px;
+}
+
+.footnote{
+  font-family:'Lato', sans-serif;
+  font-size:.6rem;
+  opacity:.65;
+  line-height:1.5;
+  max-width:85vw;
+  white-space:normal;
+  word-break:break-word;
+}
+.footnote + .footnote{ margin-top:.15rem; }
+.footnote a{ color:#66ccff; text-decoration:underline; font-weight:500; }
+
+@media (max-width:767px){
+  .footnote{ font-size:.45rem; max-width:90vw; }
+  .hero-title{ font-size:2rem !important; line-height:1.2; }
+}
+
+/* =========================
+   SPACER / METHODOLOGY
+   ========================= */
+.spacer{
+  height:20vh;
+  background:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.spacer-inner{
+  width:100%;
+  max-width:1000px;
+  padding:10px 20px;
+  text-align:center;
+}
+.spacer-title{
+  font-size:1.4rem;
+  margin-bottom:10px;
+  font-family:'Staatliches', sans-serif;
+  letter-spacing:1px;
+}
+.icon-line-wrapper{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.icon-block{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  flex:0 0 auto;
+  width:90px;
+}
+.icon-block img{ width:40px; height:40px; object-fit:contain; }
+.icon-block span{
+  font-size:.7rem;
+  font-family:'Lato', sans-serif;
+  text-transform:uppercase;
+  margin-top:5px;
+}
+.line{
+  flex-grow:1;
+  height:2px;
+  background:#999;
+  min-width:20px;
+  max-width:100px;
+  transition:.3s;
+}
+@media (max-width:768px){
+  .line{ max-width:30px; }
+  .icon-block{ width:70px; }
+  .icon-block img{ width:32px; height:32px; }
+  .icon-block span{ font-size:.65rem; }
+}
+
+/* =========================
+   HEADER — GLASS NEON
+   ========================= */
+header.topbar{
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(var(--maxw), calc(100% - var(--page-pad)));
+  z-index: 9999;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 14px;
+
+  padding: var(--header-pad-y) var(--header-pad-x);
+  border-radius: 32px;
+
+  background: rgba(10,10,14,.38);
+  border: 1px solid rgba(255,255,255,.10);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 50px rgba(0,0,0,.35),
+              inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+header.topbar::after{
+  content:"";
+  position:absolute;
+  left: 18px;
+  right: 18px;
+  bottom: -1px;
+  height:2px;
+  border-radius:999px;
+  background: linear-gradient(90deg,
+    rgba(102,204,255,0),
+    var(--neonA),
+    var(--neonB),
+    rgba(243,92,163,0)
+  );
+  opacity:.8;
+  pointer-events:none;
+}
+
+.brand{
+  text-decoration:none;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  line-height:1.05;
+  gap:2px;
+}
+.brand-title{
+  font-family:'Staatliches', sans-serif;
+  letter-spacing:1px;
+  font-size:1.15rem;
+  text-transform:uppercase;
+}
+.brand-subtitle{
+  font-family:'Lato', sans-serif;
+  letter-spacing:.9px;
+  font-size:.62rem;
+  text-transform:uppercase;
+  color: var(--neonA);
+  opacity:.85;
+}
+
+/* Desktop nav */
+.nav-desktop{
+  display:none;
+  align-items:center;
+  gap:10px;
+}
+.nav-desktop a{
+  font-family:'Lato', sans-serif;
+  font-size:.78rem;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  color: rgba(255,255,255,.88);
+  text-decoration:none;
+
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid transparent;
+
+  transition: transform .18s ease, background .18s ease, border-color .18s ease, opacity .18s ease;
+  opacity:.86;
+}
+.nav-desktop a:hover{
+  opacity:1;
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.10);
+}
+
+.topbar-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* Language selector exists (structure unchanged) but hidden for EN-only */
+.lang-select{
+  display:none;
+  align-items:center;
+  gap:6px;
+}
+
+.topbar-cta{
+  display:none;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);
+  color:white;
+  background: linear-gradient(90deg, rgba(102,204,255,.18), rgba(243,92,163,.18));
+  font-family:'Staatliches', sans-serif;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:.2s ease;
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+}
+.topbar-cta:hover{
+  border-color: rgba(255,255,255,.28);
+  transform: translateY(-1px);
+  background: linear-gradient(90deg, rgba(102,204,255,.28), rgba(243,92,163,.28));
+}
+
+.burger{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  padding:10px;
+  transition:.18s ease;
+}
+.burger:hover{ background: rgba(255,255,255,.08); }
+.burger span{
+  display:block;
+  width:18px;
+  height:2px;
+  background: rgba(255,255,255,.92);
+  border-radius:99px;
+}
+
+@media (min-width:900px){
+  .nav-desktop{ display:flex; }
+  .topbar-cta{ display:inline-flex; align-items:center; }
+  .burger{ display:none; }
+}
+
+header.topbar.compact{
+  top:10px;
+  padding: 9px var(--header-pad-x);
+  border-radius: 22px;
+  background: rgba(10,10,14,.55);
+}
+
+/* =========================
+   MOBILE MENU (drawer)
+   ========================= */
+.mobile-menu-backdrop{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,.58);
+  z-index:9998;
+  opacity:0;
+  pointer-events:none;
+  transition: opacity .25s ease;
+}
+
+.mobile-menu{
+  position:fixed;
+  top:0;
+  right:-92%;
+  width:92%;
+  max-width:420px;
+  height:100vh;
+  z-index:9999;
+  transition: right .3s ease;
+  display:flex;
+
+  background: rgba(10,10,14,.78);
+  backdrop-filter: blur(18px);
+  border-left:1px solid rgba(255,255,255,.10);
+  box-shadow:-10px 0 30px rgba(0,0,0,.25);
+}
+
+.mobile-menu-inner{
+  width:100%;
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  font-family:'Lato', sans-serif;
+  color:#fff;
+}
+
+.mobile-menu-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-bottom:8px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.mobile-menu-title{
+  font-family:'Staatliches', sans-serif;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  font-size:1.1rem;
+  opacity:.92;
+}
+.mobile-close{
+  border:none;
+  background:transparent;
+  font-size:2rem;
+  line-height:1;
+  cursor:pointer;
+  color:#fff;
+  padding:0 6px;
+}
+
+.m-link{
+  text-decoration:none;
+  color:#fff;
+  padding:14px 14px;
+  border-radius:16px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  font-weight:700;
+  font-size:.9rem;
+  backdrop-filter: blur(6px);
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+}
+.m-link:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.18);
+}
+
+.m-cta{
+  margin-top:8px;
+  padding:14px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background: linear-gradient(90deg, rgba(102,204,255,.22), rgba(243,92,163,.18));
+  color:#fff;
+  cursor:pointer;
+  text-transform:uppercase;
+  font-weight:700;
+  box-shadow: 0 18px 40px rgba(0,0,0,.35);
+}
+.m-cta:hover{
+  transform: translateY(-1px);
+  background: linear-gradient(90deg, rgba(102,204,255,.30), rgba(243,92,163,.26));
+}
+
+.mobile-open .mobile-menu{ right:0; }
+.mobile-open .mobile-menu-backdrop{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* =========================
+   SIDE PANEL + BACKDROP
+   ========================= */
+#panel-backdrop{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,.4);
+  z-index:1000;
+  opacity:0;
+  visibility:hidden;
+  transition: opacity .3s ease;
+}
+#panel-backdrop.visible{
+  opacity:1;
+  visibility:visible;
+}
+
+#side-panel{
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:90%;
+  height:100vh;
+  background:#fff;
+  color:#000;
+  z-index:1001;
+  transition: right .4s ease;
+  box-shadow:-2px 0 8px rgba(0,0,0,.3);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+#side-panel.open{ right:0; }
+
+@media (min-width:768px){
+  #side-panel{ width:50%; right:-50%; }
+  #side-panel.open{ right:0; }
+}
+
+.side-content{
+  overflow-y:auto;
+  flex-grow:1;
+  padding: 0 20px 40px 20px;
+  -webkit-overflow-scrolling:touch;
+  min-height:0;
+  font-family:'Roboto', sans-serif;
+}
+#close-panel{
+  background:none;
+  border:none;
+  font-size:24px;
+  align-self:flex-end;
+  margin:10px;
+  cursor:pointer;
+}
+
+body.modal-open{
+  overflow:hidden;
+}
+
+/* =========================
+   COOKIE UI
+   ========================= */
+.cookie-banner{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:#f9f9f9;
+  border-top:1px solid #ccc;
+  padding:20px;
+  font-size:.9rem;
+  z-index:9999;
+  transform:translateY(100%);
+  transition:transform .4s ease;
+  box-shadow:0 -2px 6px rgba(0,0,0,.1);
+}
+.cookie-banner.show{ transform:translateY(0%); }
+.cookie-content{
+  max-width:960px;
+  margin:0 auto;
+  color:#333;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+.cookie-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.cookie-buttons button{
+  padding:10px 18px;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  font-family:'Lato', sans-serif;
+}
+#accept-cookies{ background:black; color:white; }
+#config-cookies{ background:#eee; color:#333; }
+#reject-cookies{ background:transparent; color:#999; border:1px solid #ccc; }
+
+/* Cookie modal */
+.cookie-modal{
+  position:fixed;
+  top:0; left:0;
+  width:100vw; height:100vh;
+  background:rgba(0,0,0,.5);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  padding:20px;
+}
+.cookie-modal.show{ display:flex; }
+.cookie-modal-content{
+  background:#fff;
+  padding:30px;
+  border-radius:16px;
+  max-width:500px;
+  width:100%;
+  font-family:'Roboto', sans-serif;
+  box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+.modal-buttons{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:20px;
+}
+.save-btn,.cancel-btn{
+  padding:10px 20px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:.9rem;
+}
+.save-btn{ background:black; color:white; }
+.cancel-btn{ background:transparent; border:1px solid #ccc; color:#333; }
+
+/* ✅ Cookie overlay actually works now */
+#cookie-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:9998;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .25s ease;
+}
+#cookie-overlay.show{
+  opacity:1;
+  visibility:visible;
+}
+
+/* ✅ Modal base styles (cookie policy modal needs it) */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  padding:20px;
+}
+.modal .modal-content{
+  background:#fff;
+  color:#000;
+  width:min(900px, 100%);
+  max-height:90vh;
+  overflow:hidden;
+  border-radius:18px;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+  padding:22px;
+  font-family:'Roboto', sans-serif;
+}
+.modal .modal-scroll{
+  overflow:auto;
+  max-height:65vh;
+  padding-right:8px;
+}
+
+/* Move the sec2 headline block lower (structure stays 1:1) */
+#sec2 .sec2-copy{
+  margin-top: clamp(20vh, 42vh, 35vh); /* adjust if needed */
+}
+
+
+/* =========================
+   PRICING (ISHARE GLASS / NEON)
+   ========================= */
+
+.pricing-section{
+  position: relative;
+  padding: 80px 0 90px;
+  background: radial-gradient(circle at top, rgba(102,204,255,.08), transparent 45%),
+              radial-gradient(circle at bottom, rgba(243,92,163,.08), transparent 45%),
+              transparent;
+  color: #fff;
+}
+
+.pricing-head{
+  text-align: left;
+  max-width: 760px;
+}
+
+.pricing-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:'Lato', sans-serif;
+  letter-spacing:.18em;
+  text-transform: uppercase;
+  font-size:.72rem;
+  color: rgba(255,255,255,.72);
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(10,10,14,.28);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.18);
+}
+
+.pricing-title{
+  margin-top: 14px;
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  line-height: 1.15;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.pricing-subtitle{
+  margin-top: 10px;
+  font-family:'Lato', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,.72);
+}
+
+.pricing-grid{
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 900px){
+  .pricing-grid{
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 18px;
+  }
+}
+
+.plan-card{
+  position: relative;
+  border-radius: 22px;
+  padding: 18px 18px 16px;
+  background: rgba(10,10,14,.38);
+  border: 1px solid rgba(255,255,255,.10);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 50px rgba(0,0,0,.35),
+              inset 0 1px 0 rgba(255,255,255,.06);
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.plan-card::after{
+  content:"";
+  position:absolute;
+  left: 16px;
+  right: 16px;
+  top: -1px;
+  height:2px;
+  border-radius:999px;
+  background: linear-gradient(90deg,
+    rgba(102,204,255,0),
+    rgba(102,204,255,.85),
+    rgba(243,92,163,.85),
+    rgba(243,92,163,0)
+  );
+  opacity:.75;
+  pointer-events:none;
+}
+
+.plan-card:hover{
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,.18);
+  background: rgba(10,10,14,.48);
+}
+
+.plan-card-pro{
+  border-color: rgba(102,204,255,.28);
+  box-shadow: 0 22px 60px rgba(0,0,0,.42),
+              0 0 0 1px rgba(102,204,255,.10) inset;
+}
+
+.plan-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+}
+
+.plan-name{
+  font-size: 1.05rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.plan-tagline{
+  margin-top: 6px;
+  font-family:'Lato', sans-serif;
+  font-size: .92rem;
+  color: rgba(255,255,255,.70);
+  line-height: 1.45;
+}
+
+.plan-badge{
+  font-family:'Lato', sans-serif;
+  font-size: .70rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.05);
+  white-space: nowrap;
+}
+
+.badge-basic{ opacity:.9; }
+.badge-pro{
+  border-color: rgba(102,204,255,.45);
+  background: rgba(102,204,255,.12);
+  color: #fff;
+}
+.badge-enterprise{
+  border-color: rgba(34,197,94,.45);
+  background: rgba(34,197,94,.12);
+  color:#d1fae5;
+}
+
+.plan-divider{
+  margin: 14px 0 10px;
+  height: 1px;
+  background: radial-gradient(circle, rgba(255,255,255,.22), transparent 65%);
+  opacity: .55;
+}
+
+.plan-label{
+  font-family:'Lato', sans-serif;
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 8px;
+}
+
+.plan-features{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  font-family:'Lato', sans-serif;
+  font-size: .92rem;
+  line-height: 1.45;
+}
+
+.plan-features li{
+  position: relative;
+  padding-left: 18px;
+  color: rgba(255,255,255,.88);
+}
+
+.plan-features li::before{
+  content:"✓";
+  position:absolute;
+  left:0;
+  top:0;
+  opacity:.9;
+}
+
+.plan-features li.muted{
+  color: rgba(255,255,255,.55);
+}
+.plan-features li.muted::before{
+  content:"–";
+  opacity:.65;
+}
+
+.plan-footer{
+  margin-top: 14px;
+  display:flex;
+  flex-direction:column;
+  gap: 12px;
+}
+
+.bestfor-label{
+  font-family:'Lato', sans-serif;
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+}
+
+.bestfor-text{
+  margin-top: 6px;
+  font-family:'Lato', sans-serif;
+  font-size: .92rem;
+  color: rgba(255,255,255,.72);
+  line-height: 1.5;
+}
+
+.plan-btn{
+  align-self:flex-start;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+  color: #fff;
+  background: linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  font-family:'Staatliches', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor:pointer;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+  box-shadow: 0 12px 30px rgba(0,0,0,.22);
+}
+
+.plan-btn:hover{
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.28);
+  background: linear-gradient(90deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+}
+
+.plan-btn-pro{
+  background: linear-gradient(90deg, rgba(102,204,255,.35), rgba(243,92,163,.25));
+  border-color: rgba(102,204,255,.40);
+}
+.plan-btn-pro:hover{
+  background: linear-gradient(90deg, rgba(102,204,255,.48), rgba(243,92,163,.36));
+  border-color: rgba(102,204,255,.55);
+}
+
+/* FIX: pricing section background for white text */
+.pricing-section{
+  background:
+    radial-gradient(circle at top, rgba(102,204,255,.12), transparent 45%),
+    radial-gradient(circle at bottom, rgba(243,92,163,.12), transparent 45%),
+    linear-gradient(180deg, #0a0a0e 0%, #0e0e14 100%);
+}
+
+
+/* =========================
+   PRICING — CIRCULAR NEON GRADIENT BACKGROUND
+   ========================= */
+
+.pricing-section{
+  position: relative;
+  background:
+    radial-gradient(
+      circle at 20% 25%,
+      rgba(102,204,255,0.18),
+      rgba(102,204,255,0.08) 28%,
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 80% 35%,
+      rgba(243,92,163,0.18),
+      rgba(243,92,163,0.08) 30%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(102,204,255,0.12),
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      #0a0a0e 0%,
+      #0e0e14 100%
+    );
+}
+
+
+
+  </style>
+</head>
+
+<body>
+  <!-- ✅ wrapper added; structure inside remains 1:1 -->
+  <div class="ishare-landing" id="ishare-landing">
+
+    <header class="topbar" id="topbar">
+      <a class="brand" href="#hero" aria-label="iShare Home">
+        <div class="brand-title">iShare®</div>
+        <div class="brand-subtitle">Empowering Charities</div>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Primary">
+        <a href="#hero">Home</a>
+        <a href="#sec2">Experience</a>
+        <a href="#contacto">Contact</a>
+        <a href="#legal" class="nav-legal">Legal</a>
+      </nav>
+
+      <div class="topbar-actions">
+        <!-- kept (structure 1:1) but hidden for EN-only -->
+        <div class="lang-select" role="group" aria-label="Language">
+          <button type="button" data-lang="es" id="btn-es">ES</button>
+          <button type="button" data-lang="en" id="btn-en">EN</button>
+          <button type="button" data-lang="ar" id="btn-ar">AR</button>
+        </div>
+
+        <button class="topbar-cta open-panel" type="button">Request a Demo</button>
+
+        <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false">
+          <div class="burger-lines" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile drawer -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <div class="mobile-menu-inner">
+        <div class="mobile-menu-head">
+          <div class="mobile-menu-title">MENU</div>
+          <button class="mobile-close" id="mobileClose" type="button" aria-label="Close menu">×</button>
+        </div>
+
+        <a href="#hero" class="m-link">Home</a>
+        <a href="#sec2" class="m-link">Experience</a>
+        <a href="#contacto" class="m-link">Contact</a>
+        <a href="#legal" class="m-link">Legal</a>
+
+        <button class="m-cta open-panel" type="button">Request a Demo</button>
+      </div>
+    </div>
+
+    <div class="mobile-menu-backdrop" id="mobileBackdrop"></div>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner">
+      <div class="cookie-content">
+        <span>
+          We use cookies to personalize content, measure performance, and improve your experience.
+          See our <a href="#politica-cookies">Cookie Policy</a>.
+        </span>
+        <div class="cookie-buttons">
+          <button id="accept-cookies">Accept all</button>
+          <button id="config-cookies">Settings</button>
+          <button id="reject-cookies">Reject</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cookie Settings Modal -->
+    <div id="cookie-modal" class="cookie-modal">
+      <div class="cookie-modal-content">
+        <h2>Cookie Settings</h2>
+        <p class="modal-desc">
+          Choose which cookies you want to allow. You can change these preferences at any time.
+        </p>
+
+        <div class="cookie-option">
+          <label>
+            <input type="checkbox" checked disabled />
+            <strong>Necessary cookies</strong><br>
+            These cookies are required for the website to function and cannot be turned off.
+          </label>
+        </div>
+
+        <div class="cookie-option">
+          <label>
+            <input type="checkbox" id="analytics-cookies" />
+            <strong>Analytics cookies</strong><br>
+            Help us understand usage and improve site performance.
+          </label>
+        </div>
+
+        <div class="cookie-option">
+          <label>
+            <input type="checkbox" id="ads-cookies" />
+            <strong>Advertising cookies</strong><br>
+            Help show more relevant content and measure campaign performance.
+          </label>
+        </div>
+
+        <div class="modal-buttons">
+          <button id="save-settings" class="save-btn">Save preferences</button>
+          <button id="cancel-settings" class="cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div id="cookie-overlay"></div>
+
+    <section id="hero">
+      <video class="video-bg" autoplay muted loop playsinline>
+        <source src="img/screen1.mp4" type="video/mp4">
+      </video>
+
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="logo-container" style="
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          margin-top: 15vh;
+          margin-bottom: 30px;
+        ">
+          <img src="img/lg (1).png" alt="iShare Logo" class="logo" />
+        </div>
+
+        <div class="align-container">
+          <div class="hero-copy">
+
+            <h1 class="hero-title">
+              iShare® — THE IMMERSIVE VR + AI MARKETING TOOL FOR CHARITIES
+            </h1>
+
+            <p class="hero-subtitle">
+              <span id="rotating-text" class="fade">
+                Turn your case for support into an experience donors can explore.
+              </span>
+            </p>
+
+            <button class="cta-button open-panel">Request a Demo</button>
+
+            <div class="footnote-block">
+              <p class="footnote">
+                Marshall McLuhan was right: the medium becomes the message when communication truly lands.
+              </p>
+              <p class="footnote">
+                iShare® helps charities build trust, transparency, and long-term donor relationships through immersive engagement.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="spacer">
+      <div class="spacer-inner">
+        <h2 class="spacer-title">HOW ISHARE® WORKS</h2>
+        <div class="icon-line-wrapper">
+          <div class="icon-block">
+            <img src="img/icon1.png" alt="Immersive Storytelling">
+            <span>IMMERSION</span>
+          </div>
+          <div class="line"></div>
+          <div class="icon-block">
+            <img src="img/icon2.png" alt="Engagement">
+            <span>ENGAGEMENT</span>
+          </div>
+          <div class="line"></div>
+          <div class="icon-block">
+            <img src="img/icon3.png" alt="Giving Tools">
+            <span>GIVING TOOLS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="sec2">
+      <video class="video-bg" autoplay muted loop playsinline poster="img/fallback8.jpg">
+        <source src="img/screen2.mp4" type="video/mp4">
+      </video>
+      <div class="overlay"></div>
+
+      <div class="content">
+        <div class="align-container">
+          <div class="hero-copy sec2-copy">
+            <h1 class="hero-title">BRING YOUR CASE FOR SUPPORT TO LIFE</h1>
+            <p class="hero-subtitle">
+              <span id="rotating-text-sec2" class="fade">Interactive virtual spaces</span>
+            </p>
+            <button class="cta-button" onclick="alert('Opening the experience...')">
+              ENTER EXPERIENCE
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section id="pricing" class="pricing-section">
+  <div class="align-container">
+    <header class="pricing-head">
+      <div class="pricing-kicker">iShare®</div>
+      <h2 class="pricing-title">Standard 3-Tier Subscription Model</h2>
+      <p class="pricing-subtitle">
+        A subscription structure designed for organizations running fundraising and capital campaigns,
+        from early-stage nonprofits to large institutions.
+      </p>
+    </header>
+
+    <div class="pricing-grid">
+      <!-- BASIC -->
+      <article class="plan-card">
+        <div class="plan-top">
+          <div>
+            <h3 class="plan-name">Basic</h3>
+            <p class="plan-tagline">Essential tools for presenting fundraising projects.</p>
+          </div>
+          <span class="plan-badge badge-basic">Starter</span>
+        </div>
+
+        <div class="plan-divider"></div>
+
+        <p class="plan-label">Features</p>
+        <ul class="plan-features">
+          <li>2D plans and basic 3D viewing</li>
+          <li>Project descriptions, campaign goals and milestones</li>
+          <li>Viewing Naming Opportunities (read-only)</li>
+          <li>Static images and media galleries</li>
+          <li>Up to 3 active projects</li>
+          <li>Giftabulator </li>
+          <li class="muted">No AI features</li>
+          <li class="muted">No Unreal Engine environments</li>
+        </ul>
+
+        <div class="plan-footer">
+          <div class="bestfor">
+            <div class="bestfor-label">Best for</div>
+            <div class="bestfor-text">
+              Small nonprofits, early-stage campaigns, and introductory donor presentations.
+            </div>
+          </div>
+
+          <button class="plan-btn" type="button">Choose Basic →</button>
+        </div>
+      </article>
+
+      <!-- PRO -->
+      <article class="plan-card plan-card-pro">
+        <div class="plan-top">
+          <div>
+            <h3 class="plan-name">Pro</h3>
+            <p class="plan-tagline">Advanced visualization and donor engagement capabilities.</p>
+          </div>
+          <span class="plan-badge badge-pro">Most Popular</span>
+        </div>
+
+        <div class="plan-divider"></div>
+
+        <p class="plan-label">Features</p>
+        <ul class="plan-features">
+          <li>Full 3D navigation and 360° environments</li>
+          <li>Interactive Naming Opportunities (booking, tracking, notifications)</li>
+          <li>Giftabulator </li>
+          <li>AI Assistant: donor-friendly explanations + tailored suggestions</li>
+          <li>Presentation modes for major donor meetings</li>
+          <li>Static Unreal Engine scenes (renders and panoramas)</li>
+          <li>Up to 20 active projects</li>
+        </ul>
+
+        <div class="plan-footer">
+          <div class="bestfor">
+            <div class="bestfor-label">Best for</div>
+            <div class="bestfor-text">
+              Growing organizations, schools, hospitals, museums, and mid-to-large fundraising campaigns.
+            </div>
+          </div>
+
+          <button class="plan-btn plan-btn-pro" type="button">Choose Pro →</button>
+        </div>
+      </article>
+
+      <!-- ENTERPRISE -->
+      <article class="plan-card">
+        <div class="plan-top">
+          <div>
+            <h3 class="plan-name">Enterprise</h3>
+            <p class="plan-tagline">Immersive, high-performance environment for large-scale fundraising.</p>
+          </div>
+          <span class="plan-badge badge-enterprise">For Large Campaigns</span>
+        </div>
+
+        <div class="plan-divider"></div>
+
+        <p class="plan-label">Features</p>
+        <ul class="plan-features">
+          <li>Advanced interactive Unreal Engine spaces</li>
+          <li>Full AI Suite: forecasts, donor scenarios, donor journeys</li>
+          <li>Giftabulator </li>
+          <li>API access, integrations, and white-label options</li>
+          <li>Unlimited projects</li>
+          <li>VR / immersive presentations for capital campaigns</li>
+        </ul>
+
+        <div class="plan-footer">
+          <div class="bestfor">
+            <div class="bestfor-label">Best for</div>
+            <div class="bestfor-text">
+              Universities, major foundations, large development projects, multi-million fundraising campaigns.
+            </div>
+          </div>
+
+          <button class="plan-btn" type="button">Contact Sales →</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Cookie Policy modal -->
+    <div id="cookies-policy-modal" class="modal">
+      <div class="modal-content">
+        <h2>Cookie Policy</h2>
+        <div class="modal-scroll">
+          <p>
+            At <strong>iShare®</strong>, we use cookies to provide a better experience, improve our services, and (when allowed) measure performance.<br><br>
+            <strong>What are cookies?</strong><br>
+            Cookies are small text files placed on your device when you visit a website. They help remember preferences and improve usability.<br><br>
+            <strong>What types of cookies do we use?</strong><br>
+            - Necessary cookies: required for basic site functionality and cannot be disabled.<br>
+            - Analytics cookies: help us understand how the site is used (e.g., analytics tools).<br>
+            - Advertising cookies: help measure and optimize campaigns where applicable.<br><br>
+            <strong>How can you manage cookies?</strong><br>
+            You can accept, reject, or configure cookies using our consent banner. You can also control cookies in your browser settings.<br><br>
+            <strong>Change your preferences</strong><br>
+            You can update your preferences at any time by reopening the cookie settings and adjusting your choices.<br><br>
+            For questions, contact us at <a href="mailto:andrei@3dna.es">andrei@3dna.es</a>.
+          </p>
+        </div>
+        <div style="text-align: right; margin-top: 15px;">
+          <button id="close-policy-modal" style="padding: 10px 20px;">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <section class="gallery">
+      <img src="https://via.placeholder.com/200x140" alt="Item 1">
+      <img src="https://via.placeholder.com/200x140" alt="Item 2">
+      <img src="https://via.placeholder.com/200x140" alt="Item 3">
+      <img src="https://via.placeholder.com/200x140" alt="Item 4">
+    </section>
+
+    <section class="form-section">
+      <h2 class="lang-es">Request a Demo</h2>
+      <h2 class="lang-en" style="display:none">Request a Demo</h2>
+      <form>
+        <input type="text" placeholder="Name">
+        <input type="email" placeholder="Email">
+        <input type="tel" placeholder="Phone">
+        <textarea placeholder="Message"></textarea>
+        <button type="submit">Send</button>
+      </form>
+    </section>
+
+    <div class="footer">
+      
+    </div>
+
+    <!-- Backdrop (single instance) -->
+    <div id="panel-backdrop"></div>
+
+    <!-- Side panel -->
+    <div id="side-panel">
+      <button id="close-panel">&times;</button>
+
+      <div class="side-content">
+        <h2>WELCOME</h2>
+
+        <p>
+          Marshall McLuhan was right: the medium becomes the message when communication truly lands.
+          Charities need the right tools to communicate mission, need, and impact — and to steward lasting donor relationships.
+        </p>
+
+        <p>
+          <strong>iShare®</strong> is an intuitive Virtual Reality platform for charities that activates engagement with stakeholders —
+          building trust, fostering transparency, and nurturing long-term supporter relationships.
+        </p>
+
+        <p>
+          iShare® transforms your case for support into an immersive experience. Using AI-powered digital twinning,
+          donors can step into your buildings and plans — visualizing spaces in vivid detail.
+        </p>
+
+        <p><strong>Key engagement tools include:</strong></p>
+        <p>
+          • <strong>AI-driven videos</strong> — brief, engaging explanations of each space (need, function, purpose).<br>
+          • <strong>Affordability calculator</strong> — helps donors evaluate naming opportunities.<br>
+          • <strong>Interactive exploration</strong> — donors navigate giving options and opportunities inside the experience.
+        </p>
+
+        <p>
+          Your personalized iShare® microsite integrates your case for support and guides donors to areas of interest —
+          turning interest into informed, meaningful giving.
+        </p>
+
+        <div class="sticky-header">
+          <div class="form-intro">
+            <h2>Let’s talk about your organization.</h2>
+          </div>
+
+          <div class="progress-wrapper">
+            <div class="progress-text" id="progress-text">0% completed</div>
+            <div class="progress-container">
+              <div class="progress-bar" id="progress-bar"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 1 -->
+        <div class="form-section">
+          <h3>What type of organization are you?</h3>
+          <div class="form-grid">
+            <label><input type="checkbox" name="negocio" value="education"> Education</label>
+            <label><input type="checkbox" name="negocio" value="healthcare"> Healthcare</label>
+            <label><input type="checkbox" name="negocio" value="community"> Community</label>
+            <label><input type="checkbox" name="negocio" value="arts"> Arts & Culture</label>
+            <label><input type="checkbox" name="negocio" value="faith"> Faith-based</label>
+            <label><input type="checkbox" name="negocio" value="housing"> Housing</label>
+            <label><input type="checkbox" name="negocio" value="environment"> Environment</label>
+            <label><input type="checkbox" name="negocio" value="research"> Research</label>
+            <label><input type="checkbox" name="negocio" value="foundation"> Foundation</label>
+            <label><input type="checkbox" name="negocio" value="other-npo"> Other nonprofit</label>
+            <label>
+              <input type="checkbox" id="otroCheckbox" name="negocio" value="otro"> Other
+            </label>
+            <div id="otroInputWrapper" style="display:none; margin-top: 10px;">
+              <input type="text" name="negocio_otro" placeholder="Please specify" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="form-section">
+          <h3>What outcomes matter most right now?</h3>
+          <div class="form-grid">
+            <label><input type="checkbox" name="pago" value="capital-campaign"> Capital campaign</label>
+            <label><input type="checkbox" name="pago" value="major-gifts"> Major gifts</label>
+            <label><input type="checkbox" name="pago" value="naming"> Naming opportunities</label>
+            <label><input type="checkbox" name="pago" value="stewardship"> Stewardship & transparency</label>
+            <label><input type="checkbox" name="pago" value="board"> Board/stakeholder engagement</label>
+          </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="form-section">
+          <h3>Where do you want to use iShare®?</h3>
+          <div class="form-grid">
+            <label><input type="checkbox" name="ads" value="events"> Donor events</label>
+            <label><input type="checkbox" name="ads" value="1to1"> 1:1 meetings</label>
+            <label><input type="checkbox" name="ads" value="microsite"> Microsite / web</label>
+            <label><input type="checkbox" name="ads" value="other"> Other</label>
+          </div>
+        </div>
+
+        <!-- Public Offer modal (kept 1:1 structurally, text in English) -->
+        <div id="modal-oferta" class="modal-oferta" style="display: none;">
+          <div class="modal-content" style="overflow-y: auto; max-height: 90vh; padding: 1rem;">
+            <button id="close-oferta" class="modal-close" style="position: absolute; top: 1rem; right: 1rem;">&times;</button>
+            <h2>Public Offer Agreement</h2>
+            <p><strong>Version:</strong> 1.0 | <strong>Effective date:</strong> [dd/mm/yyyy]</p>
+
+            <h3>1. Purpose</h3>
+            <p>This document is a binding Public Offer issued by the provider of an automated digital system (“Provider”) offering access to a conversion structure (“funnel”) that may include forms, pages, automations, and payment integrations.</p>
+            <p>By using the system, the user accepts all terms stated here.</p>
+
+            <h3>2. Technical Functionality Warranty</h3>
+            <ul>
+              <li>The Provider warrants the funnel has been designed, tested, and activated under normal operating conditions.</li>
+              <li>Forms, redirects, content, automations, and third-party integrations are supported where configured correctly.</li>
+              <li>Payment acceptance depends on external systems (hosting, DNS, payment processors) and proper configuration.</li>
+              <li>No sales, traffic, conversion, or commercial results are guaranteed.</li>
+            </ul>
+
+            <h3>3. Terms of Use</h3>
+            <ul>
+              <li>The user may use the system within defined technical parameters.</li>
+              <li>Access may be suspended for misuse, technical reasons, or contractual reasons.</li>
+            </ul>
+
+            <h3>4. Limitation of Liability</h3>
+            <p><strong>The Provider is not responsible for:</strong></p>
+            <ul>
+              <li>Lost profits or indirect damages.</li>
+              <li>Third-party failures (payment processors, hosting, DNS, etc.).</li>
+              <li>Illegal or fraudulent content added by the user.</li>
+              <li>User tax or legal obligations.</li>
+            </ul>
+
+            <h3>5. Intellectual Property</h3>
+            <ul>
+              <li>All technical and visual content remains the Provider’s property.</li>
+              <li>The user receives a limited, non-exclusive, non-transferable right of use.</li>
+            </ul>
+
+            <h3>6. Term & Termination</h3>
+            <ul>
+              <li>This agreement is effective upon first use.</li>
+              <li>Indefinite duration unless stated otherwise.</li>
+              <li>Access may be discontinued without prior notice.</li>
+            </ul>
+
+            <h3>7. Governing Law</h3>
+            <p>This agreement is governed by Spanish law. Disputes are subject to courts at the Provider’s domicile.</p>
+
+            <h3>8. Final Provisions</h3>
+            <ul>
+              <li>This agreement may be updated without prior notice.</li>
+              <li>If translated, the Spanish version prevails.</li>
+            </ul>
+
+            <hr style="margin: 2rem 0;">
+
+            <p><strong>Legal contact:</strong> <a href="mailto:andrei@3dna.es">andrey@ishare.ca</a></p>
+            <p><strong>Provider:</strong> ISHARE®</p>
+            <p><strong></strong> </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      // HERO rotating lines (EN-only, iShare®-aligned)
+      const phrases = [
+        "Immersive VR storytelling that builds donor trust.",
+        "Turn architectural plans into experiences donors can explore.",
+        "AI-powered digital twinning for transparent stewardship.",
+        "Help donors understand impact—space by space.",
+        "Make naming opportunities tangible and easy to evaluate.",
+        "The medium becomes the message—make it immersive.",
+        "Engage stakeholders with clarity, emotion, and precision.",
+        "Transform interest into informed, meaningful giving.",
+        "A microsite tailored to guide donors to what matters most.",
+        "Bring your vision to life—inside a shareable experience."
+      ];
+
+      let current = 0;
+      const el = document.getElementById("rotating-text");
+
+      setInterval(() => {
+        el.classList.add("fade-out");
+        setTimeout(() => {
+          current = (current + 1) % phrases.length;
+          el.textContent = phrases[current];
+          el.classList.remove("fade-out");
+        }, 600);
+      }, 3500);
+
+      // SEC2 rotating lines (EN-only)
+      const phrasesSec2 = [
+        "Interactive virtual spaces",
+        "Immersive donor walkthroughs",
+        "Digital twin experiences",
+        "AI-driven explainer videos",
+        "Naming opportunities in context",
+        "Stakeholder engagement that scales"
+      ];
+
+      let currentSec2 = 0;
+      const elSec2 = document.getElementById("rotating-text-sec2");
+
+      setInterval(() => {
+        elSec2.classList.add("fade-out");
+        setTimeout(() => {
+          currentSec2 = (currentSec2 + 1) % phrasesSec2.length;
+          elSec2.textContent = phrasesSec2[currentSec2];
+          elSec2.classList.remove("fade-out");
+        }, 600);
+      }, 3500);
+
+      // Side panel open/close
+      document.addEventListener("DOMContentLoaded", () => {
+        const panel = document.getElementById('side-panel');
+        const closeBtn = document.getElementById('close-panel');
+        const backdrop = document.getElementById('panel-backdrop');
+
+        document.querySelectorAll('.open-panel').forEach(btn => {
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            panel.classList.add('open');
+            backdrop.classList.add('visible');
+            document.body.classList.add('modal-open');
+          });
+        });
+
+        function closePanel() {
+          panel.classList.remove('open');
+          backdrop.classList.remove('visible');
+          document.body.classList.remove('modal-open');
+        }
+
+        closeBtn.addEventListener('click', closePanel);
+        backdrop.addEventListener('click', closePanel);
+      });
+
+      // Cookie banner + modal
+      document.addEventListener("DOMContentLoaded", () => {
+        const banner = document.getElementById('cookie-banner');
+        const modal = document.getElementById('cookie-modal');
+        const overlay = document.getElementById('cookie-overlay');
+
+        const accept = document.getElementById('accept-cookies');
+        const config = document.getElementById('config-cookies');
+        const reject = document.getElementById('reject-cookies');
+
+        const save = document.getElementById('save-settings');
+        const cancel = document.getElementById('cancel-settings');
+
+        if (!localStorage.getItem('cookiesDecision')) {
+          banner.classList.add('show');
+        }
+
+        accept.onclick = () => {
+          localStorage.setItem('cookiesDecision', JSON.stringify({
+            necessary: true,
+            analytics: true,
+            ads: true
+          }));
+          banner.classList.remove('show');
+        };
+
+        reject.onclick = () => {
+          localStorage.setItem('cookiesDecision', JSON.stringify({
+            necessary: true,
+            analytics: false,
+            ads: false
+          }));
+          banner.classList.remove('show');
+        };
+
+        config.onclick = () => {
+          modal.classList.add('show');
+          overlay.classList.add('show');
+        };
+
+        cancel.onclick = () => {
+          modal.classList.remove('show');
+          overlay.classList.remove('show');
+        };
+
+        save.onclick = () => {
+          const analytics = document.getElementById('analytics-cookies').checked;
+          const ads = document.getElementById('ads-cookies').checked;
+
+          localStorage.setItem('cookiesDecision', JSON.stringify({
+            necessary: true,
+            analytics: analytics,
+            ads: ads
+          }));
+
+          modal.classList.remove('show');
+          overlay.classList.remove('show');
+          banner.classList.remove('show');
+        };
+      });
+
+      // Cookie policy modal open/close
+      document.querySelectorAll('a[href="#politica-cookies"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.getElementById('cookies-policy-modal').style.display = 'flex';
+        });
+      });
+
+      document.getElementById('close-policy-modal').addEventListener('click', () => {
+        document.getElementById('cookies-policy-modal').style.display = 'none';
+      });
+
+      // Conditional Google Analytics loading (only if consent.analytics === true)
+      function loadGoogleAnalytics() {
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-QGGREKNJDX';
+        document.head.appendChild(script);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-QGGREKNJDX');
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const consent = JSON.parse(localStorage.getItem('cookiesDecision'));
+        if (consent && consent.analytics) {
+          loadGoogleAnalytics();
+        }
+      });
+
+      // Public offer modal open/close
+      document.addEventListener('DOMContentLoaded', () => {
+        const ofertaLinks = document.querySelectorAll('.open-oferta');
+        const modalOferta = document.getElementById('modal-oferta');
+        const closeOferta = document.getElementById('close-oferta');
+
+        ofertaLinks.forEach(link => {
+          link.addEventListener('click', e => {
+            e.preventDefault();
+            modalOferta.style.display = 'flex';
+          });
+        });
+
+        closeOferta.addEventListener('click', () => {
+          modalOferta.style.display = 'none';
+        });
+
+        modalOferta.addEventListener('click', (e) => {
+          if (e.target === modalOferta) {
+            modalOferta.style.display = 'none';
+          }
+        });
+      });
+
+      // Progress bar logic
+      function updateStepProgress() {
+        const sections = document.querySelectorAll('.form-section');
+        let completed = 0;
+
+        sections.forEach(section => {
+          const checked = section.querySelectorAll('input[type="checkbox"]:checked').length;
+          if (checked > 0) completed++;
+        });
+
+        const percent = Math.round((completed / sections.length) * 100);
+        const bar = document.getElementById('progress-bar');
+        const text = document.getElementById('progress-text');
+
+        if (bar) bar.style.width = `${percent}%`;
+        if (text) text.textContent = `${percent}% completed`;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        updateStepProgress();
+        document.querySelectorAll('.form-section input[type="checkbox"]').forEach(cb => {
+          cb.addEventListener('change', updateStepProgress);
+        });
+      });
+
+      // "Other" input toggle
+      const otroCheckbox = document.getElementById('otroCheckbox');
+      const otroInputWrapper = document.getElementById('otroInputWrapper');
+
+      if (otroCheckbox && otroInputWrapper) {
+        otroCheckbox.addEventListener('change', function () {
+          otroInputWrapper.style.display = this.checked ? 'block' : 'none';
+        });
+      }
+
+      // Mobile menu open/close
+      document.addEventListener("DOMContentLoaded", () => {
+        const burger = document.getElementById("burger");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const mobileClose = document.getElementById("mobileClose");
+        const mobileBackdrop = document.getElementById("mobileBackdrop");
+
+        function openMobileMenu() {
+          document.body.classList.add("mobile-open");
+          burger?.setAttribute("aria-expanded", "true");
+          mobileMenu?.setAttribute("aria-hidden", "false");
+          setTimeout(() => mobileClose?.focus(), 0);
+        }
+
+        function closeMobileMenu() {
+          burger?.focus();
+          document.body.classList.remove("mobile-open");
+          burger?.setAttribute("aria-expanded", "false");
+          setTimeout(() => {
+            mobileMenu?.setAttribute("aria-hidden", "true");
+          }, 0);
+        }
+
+        burger?.addEventListener("click", openMobileMenu);
+        mobileClose?.addEventListener("click", closeMobileMenu);
+        mobileBackdrop?.addEventListener("click", closeMobileMenu);
+
+        document.querySelectorAll(".m-link").forEach(a => {
+          a.addEventListener("click", closeMobileMenu);
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") closeMobileMenu();
+        });
+      });
+    </script>
+
+  </div>
+</body>
+</html>
