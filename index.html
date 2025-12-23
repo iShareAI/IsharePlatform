@@ -1000,6 +1000,31 @@ body.modal-open{
     );
 }
 
+/* Header brand logo */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.brand-logo{
+  height: 22px;
+  width: auto;
+  display:block;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,.35));
+}
+
+.brand-text{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  line-height:1.05;
+}
+
+@media (max-width: 520px){
+  .brand-logo{ height: 20px; }
+  .brand-subtitle{ font-size: .58rem; }
+}
 
 
   </style>
@@ -1011,9 +1036,12 @@ body.modal-open{
 
     <header class="topbar" id="topbar">
       <a class="brand" href="#hero" aria-label="iShare Home">
-        <div class="brand-title">iShare®</div>
-        <div class="brand-subtitle">Empowering Charities</div>
-      </a>
+ <!-- <img src="img/lg2.png" alt="iShare" class="brand-logo" />-->
+  <div class="brand-text">
+    <div class="brand-title">iShare<sup>®</sup></div>
+    <div class="brand-subtitle">Empowering Charities</div>
+  </div>
+</a>
 
       <nav class="nav-desktop" aria-label="Primary">
         <a href="#hero">Home</a>
@@ -1354,28 +1382,11 @@ body.modal-open{
 
     <div class="spacer"></div>
 
-    <section class="gallery">
-      <img src="https://via.placeholder.com/200x140" alt="Item 1">
-      <img src="https://via.placeholder.com/200x140" alt="Item 2">
-      <img src="https://via.placeholder.com/200x140" alt="Item 3">
-      <img src="https://via.placeholder.com/200x140" alt="Item 4">
-    </section>
+   
 
-    <section class="form-section">
-      <h2 class="lang-es">Request a Demo</h2>
-      <h2 class="lang-en" style="display:none">Request a Demo</h2>
-      <form>
-        <input type="text" placeholder="Name">
-        <input type="email" placeholder="Email">
-        <input type="tel" placeholder="Phone">
-        <textarea placeholder="Message"></textarea>
-        <button type="submit">Send</button>
-      </form>
-    </section>
+    
 
-    <div class="footer">
-      
-    </div>
+    
 
     <!-- Backdrop (single instance) -->
     <div id="panel-backdrop"></div>
