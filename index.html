@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>iShare® – Empowering Charities with Immersive VR & AI Donor Engagement</title>
+  <title>iShare® – Immersive VR & AI for Charities</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
   <!-- favicon (PNG) -->
-  <link rel="icon" type="image/png" href="img/favicon_32x322.png">
+  <link rel="icon" type="image/png" href="img/ishare.png">
 
   <style>
 /* =========================
@@ -45,7 +45,7 @@ body{
   scroll-snap-type: y mandatory;
 }
 
-/* Общий контейнер для выравнивания (хедер + hero текст) */
+
 .align-container{
   width: min(var(--maxw), calc(100% - var(--page-pad)));
   margin: 0 auto;
@@ -1027,65 +1027,449 @@ body.modal-open{
 }
 
 
+.nav-menu{
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+
+  min-width: 220px;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  background: rgba(10,10,14,.78);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 16px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 40px rgba(0,0,0,.35);
+
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 9999;
+}
+
+.nav-menu a{
+  display: block;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+
+  font-family:'Lato', sans-serif;
+  font-size:.78rem;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  color: rgba(255,255,255,.88);
+  text-decoration:none;
+
+  transition: background .18s ease, border-color .18s ease, transform .18s ease, opacity .18s ease;
+  opacity: .92;
+}
+
+.nav-menu a:hover{
+  background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.10);
+  transform: translateY(-1px);
+  opacity: 1;
+}
+/* =========================
+   NAV DROPDOWN (FIX)
+   ========================= */
+.nav-dropdown{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-parent{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-arrow{
+  font-size: .8em;
+  opacity: .6;
+}
+
+/* Open on desktop hover */
+@media (hover: hover) and (pointer: fine){
+  .nav-dropdown:hover .nav-menu{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* Open on touch/click */
+.nav-dropdown.open .nav-menu{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* =========================
+   NAV DROPDOWN — STICKY FIX
+   ========================= */
+.nav-dropdown{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Hover bridge: invisible zone between parent and menu */
+.nav-dropdown::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:100%;
+  height:14px;          /* increases "hover tunnel" */
+}
+
+/* Make sure the menu stays open while hovering the menu itself */
+@media (hover: hover) and (pointer: fine){
+  .nav-dropdown:hover .nav-menu{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* Touch open state */
+.nav-dropdown.open .nav-menu{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Menu positioning: no "gap" */
+.nav-menu{
+  top: 100%;            /* remove calc gap */
+  left: 0;
+  margin-top: 10px;     /* menu offset without breaking hover (bridge covers it) */
+}
+
+
+/* =========================
+   LEFT SLIDE-OUT SUPPORT TAB
+   ========================= */
+.support-tab{
+  position: fixed;
+  left: 0;
+  top: 55vh;
+  transform: translateY(-50%);
+  z-index: 99999;
+
+  display: flex;
+  align-items: stretch;
+  text-decoration: none;
+  color: #fff;
+}
+
+.support-tab__label{
+  background: rgba(255, 147, 5, 0.78);
+  border: 1px solid rgba(255, 147, 5, 0.78);
+  border-left: none;
+
+  padding: 14px 8px;
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+
+  font-family: 'Staatliches', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: .95rem;
+
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 40px rgba(0,0,0,.35);
+}
+
+.support-tab__panel{
+  background: rgba(255, 133, 11, 0.986);
+  border: 1px solid rgba(255,255,255,.14);
+  border-left: none;
+
+  padding: 14px 14px;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+
+  font-family: 'Lato', sans-serif;
+  font-size: .88rem;
+  line-height: 1.25;
+
+  width: 240px;
+
+  /* hidden by default */
+  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+
+  transition: transform .25s ease, opacity .25s ease;
+  box-shadow: 0 18px 40px rgba(255, 148, 8, 0.35);
+}
+
+.support-tab__cta{
+  display: inline-block;
+  margin-top: 10px;
+  font-family: 'Staatliches', sans-serif;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  opacity: .9;
+}
+
+/* Desktop hover open */
+@media (hover: hover) and (pointer: fine){
+  .support-tab:hover .support-tab__panel{
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Touch open */
+.support-tab.open .support-tab__panel{
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* =========================
+   TOP UTILITY BAR (ABOVE HEADER)
+   ========================= */
+:root{
+  --utility-h: 40px;
+}
+
+/* full width thin bar */
+.utility-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--utility-h);
+  z-index: 10050;
+
+  
+ 
+  
+}
+
+.utility-inner{
+  height: 100%;
+  width: min(var(--maxw), calc(100% - var(--page-pad)));
+  margin: 0 auto;
+  padding: 0 var(--header-pad-x);
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* links on the right like your screenshot */
+}
+
+.utility-nav{
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.utility-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+
+  font-family: 'Lato', sans-serif;
+  font-size: .72rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+
+  padding: 6px 4px;
+  border-radius: 999px;
+
+  transition: color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.utility-link:hover{
+  color: rgba(0,0,0,.85);
+  background: rgba(0,0,0,.04);
+  transform: translateY(-1px);
+}
+
+.utility-ico{
+  font-size: 14px;
+  line-height: 1;
+  opacity: .8;
+}
+
+/* ===== Make room for the main glass header =====
+   Your header is fixed, so we push it down by utility bar height */
+header.topbar{
+  top: calc(var(--utility-h) + 14px);
+}
+
+/* Optional: make utility bar simpler on mobile */
+@media (max-width: 767px){
+  :root{ --utility-h: 34px; }
+  .utility-nav{ gap: 10px; }
+  .utility-text{ display: none; } /* show only icons on mobile */
+  .utility-link{ padding: 6px 10px; }
+}
+
   </style>
 </head>
 
 <body>
+
+
+  <!-- Top utility bar (above header) -->
+<div class="utility-bar" id="utilityBar" aria-label="Partner navigation">
+  <div class="utility-inner">
+    <nav class="utility-nav" aria-label="Partner links">
+      <a class="utility-link" href="https://fundingmatters.com/">
+        <span class="utility-ico" aria-hidden="true">🏠</span>
+        <span class="utility-text">FUNDING matters® Inc.</span>
+      </a>
+
+      <a class="utility-link" href="https://www.giftabulator.com/">
+        <span class="utility-ico" aria-hidden="true">📊</span>
+        <span class="utility-text">GIFTABULATOR®</span>
+      </a>
+
+      <a class="utility-link" href="https://philanthropylab.ca/">
+        <span class="utility-ico" aria-hidden="true">🔬</span>
+        <span class="utility-text">PhilanthropyLab®</span>
+      </a>
+
+      <a class="utility-link" href="#blog">
+        <span class="utility-ico" aria-hidden="true">📰</span>
+        <span class="utility-text">Blog</span>
+      </a>
+    </nav>
+  </div>
+</div>
+
+
+<!-- Support Us slide-out (left) -->
+<a class="support-tab" href="#support" aria-label="Support us">
+  <span class="support-tab__label">Support Us</span>
+  <span class="support-tab__panel">
+    <strong>Support iShare®</strong><br>
+    Help fund immersive donor journeys.<br>
+    <span class="support-tab__cta">Open →</span>
+  </span>
+</a>
+
+
+
+
+
+
   <!-- ✅ wrapper added; structure inside remains 1:1 -->
   <div class="ishare-landing" id="ishare-landing">
 
-    <header class="topbar" id="topbar">
-      <a class="brand" href="#hero" aria-label="iShare Home">
- <!-- <img src="img/lg2.png" alt="iShare" class="brand-logo" />-->
-  <div class="brand-text">
-    <div class="brand-title">iShare<sup>®</sup></div>
-    <div class="brand-subtitle">Empowering Charities</div>
-  </div>
-</a>
+   <!-- Header (iShare) -->
+<header class="topbar" id="topbar">
+  <a class="brand" href="#hero" aria-label="iShare Home">
+    <div class="brand-title">iShare</div>
+    <div class="brand-subtitle">3D & AI for Good</div>
+  </a>
 
-      <nav class="nav-desktop" aria-label="Primary">
-        <a href="#hero">Home</a>
-        <a href="#sec2">Experience</a>
-        <a href="#contacto">Contact</a>
-        <a href="#legal" class="nav-legal">Legal</a>
-      </nav>
+  <nav class="nav-desktop" aria-label="Primary">
+    <a href="#hero">Home</a>
+    <a href="#about">About</a>
 
-      <div class="topbar-actions">
-        <!-- kept (structure 1:1) but hidden for EN-only -->
-        <div class="lang-select" role="group" aria-label="Language">
-          <button type="button" data-lang="es" id="btn-es">ES</button>
-          <button type="button" data-lang="en" id="btn-en">EN</button>
-          <button type="button" data-lang="ar" id="btn-ar">AR</button>
-        </div>
+    <!-- Directions dropdown -->
+    <div class="nav-dropdown" id="directionsDropdown">
+      <a href="#directions"
+         class="nav-parent"
+         aria-haspopup="true"
+         aria-expanded="false"
+         aria-controls="directionsMenu">
+        Directions <span class="nav-arrow">▾</span>
+      </a>
 
-        <button class="topbar-cta open-panel" type="button">Request a Demo</button>
-
-        <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false">
-          <div class="burger-lines" aria-hidden="true">
-            <span></span><span></span><span></span>
-          </div>
-        </button>
-      </div>
-    </header>
-
-    <!-- Mobile drawer -->
-    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-      <div class="mobile-menu-inner">
-        <div class="mobile-menu-head">
-          <div class="mobile-menu-title">MENU</div>
-          <button class="mobile-close" id="mobileClose" type="button" aria-label="Close menu">×</button>
-        </div>
-
-        <a href="#hero" class="m-link">Home</a>
-        <a href="#sec2" class="m-link">Experience</a>
-        <a href="#contacto" class="m-link">Contact</a>
-        <a href="#legal" class="m-link">Legal</a>
-
-        <button class="m-cta open-panel" type="button">Request a Demo</button>
+      <div class="nav-menu" id="directionsMenu" role="menu" aria-label="Directions submenu">
+        <a role="menuitem" href="#healthcare">Healthcare</a>
+        <a role="menuitem" href="#education">Education</a>
+        <a role="menuitem" href="#museums">Museums</a>
+        <a role="menuitem" href="#social">Social Projects</a>
+        <a role="menuitem" href="#ecology">Ecology</a>
+        <a role="menuitem" href="#humanitarian">Humanitarian Aid</a>
       </div>
     </div>
 
-    <div class="mobile-menu-backdrop" id="mobileBackdrop"></div>
+    <a href="#projects">Projects</a>
+    <a href="#technology">Technology</a>
+    <a href="#impact">Impact</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="topbar-actions">
+    <!-- quick icons (desktop) -->
+    <div class="topbar-icons" aria-label="Quick contact">
+      <!-- Email -->
+      <a class="icon-btn"
+         href="mailto:hello@ishare.org?subject=Partnership%20request&body=Hello%20iShare%20team,%0A%0AI'd%20like%20to%20discuss%20a%20partnership.%0A"
+         aria-label="Email hello@ishare.org">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor"
+            d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+      </a>
+
+      <!-- LinkedIn (placeholder) -->
+      <a class="icon-btn"
+         href="#"
+         aria-label="LinkedIn (add link)">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor"
+            d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0.5 23.5h4V7.98h-4V23.5zM8.5 7.98h3.83v2.12h.05c.53-1 1.82-2.12 3.75-2.12 4.01 0 4.75 2.64 4.75 6.08v9.44h-4v-8.37c0-2-.04-4.57-2.79-4.57-2.79 0-3.22 2.18-3.22 4.43v8.51h-4V7.98z"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- CTA -->
+    <button class="topbar-cta open-panel" type="button">Become a Partner</button>
+
+    <!-- Burger -->
+    <button class="burger" id="burger" type="button"
+            aria-label="Open menu" aria-expanded="false">
+      <div class="burger-lines" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-inner">
+    <div class="mobile-menu-head">
+      <div class="mobile-menu-title">MENU</div>
+      <button class="mobile-close" id="mobileClose" type="button" aria-label="Close menu">×</button>
+    </div>
+
+    <a href="#hero" class="m-link">Home</a>
+    <a href="#about" class="m-link">About</a>
+    <a href="#directions" class="m-link">Directions</a>
+    <a href="#projects" class="m-link">Projects</a>
+    <a href="#technology" class="m-link">Technology</a>
+    <a href="#impact" class="m-link">Impact</a>
+    <a href="#contact" class="m-link">Contact</a>
+
+    <button class="m-cta open-panel" type="button">Become a Partner</button>
+  </div>
+</div>
+<div class="mobile-menu-backdrop" id="mobileBackdrop"></div>
+
 
     <!-- Cookie Banner -->
     <div id="cookie-banner" class="cookie-banner">
@@ -1163,7 +1547,7 @@ body.modal-open{
           <div class="hero-copy">
 
             <h1 class="hero-title">
-              iShare® — THE IMMERSIVE VR + AI MARKETING TOOL FOR CHARITIES
+              iShare® — Immersive VR & AI for Charities
             </h1>
 
             <p class="hero-subtitle">
@@ -1552,267 +1936,296 @@ body.modal-open{
     </div>
 
     <script>
-      // HERO rotating lines (EN-only, iShare®-aligned)
-      const phrases = [
-        "Immersive VR storytelling that builds donor trust.",
-        "Turn architectural plans into experiences donors can explore.",
-        "AI-powered digital twinning for transparent stewardship.",
-        "Help donors understand impact—space by space.",
-        "Make naming opportunities tangible and easy to evaluate.",
-        "The medium becomes the message—make it immersive.",
-        "Engage stakeholders with clarity, emotion, and precision.",
-        "Transform interest into informed, meaningful giving.",
-        "A microsite tailored to guide donors to what matters most.",
-        "Bring your vision to life—inside a shareable experience."
-      ];
+  // ---------- Helpers ----------
+  function startRotator(elId, phrases, interval = 3500, fadeMs = 600) {
+    const el = document.getElementById(elId);
+    if (!el || !Array.isArray(phrases) || phrases.length === 0) return;
 
-      let current = 0;
-      const el = document.getElementById("rotating-text");
+    let current = 0;
+    // Ensure initial text is from the list if empty
+    if (!el.textContent.trim()) el.textContent = phrases[0];
 
-      setInterval(() => {
-        el.classList.add("fade-out");
-        setTimeout(() => {
-          current = (current + 1) % phrases.length;
-          el.textContent = phrases[current];
-          el.classList.remove("fade-out");
-        }, 600);
-      }, 3500);
+    setInterval(() => {
+      el.classList.add("fade-out");
+      setTimeout(() => {
+        current = (current + 1) % phrases.length;
+        el.textContent = phrases[current];
+        el.classList.remove("fade-out");
+      }, fadeMs);
+    }, interval);
+  }
 
-      // SEC2 rotating lines (EN-only)
-      const phrasesSec2 = [
-        "Interactive virtual spaces",
-        "Immersive donor walkthroughs",
-        "Digital twin experiences",
-        "AI-driven explainer videos",
-        "Naming opportunities in context",
-        "Stakeholder engagement that scales"
-      ];
+  function qs(sel, root = document) { return root.querySelector(sel); }
+  function qsa(sel, root = document) { return [...root.querySelectorAll(sel)]; }
 
-      let currentSec2 = 0;
-      const elSec2 = document.getElementById("rotating-text-sec2");
+  // ---------- DOM Ready ----------
+  document.addEventListener("DOMContentLoaded", () => {
 
-      setInterval(() => {
-        elSec2.classList.add("fade-out");
-        setTimeout(() => {
-          currentSec2 = (currentSec2 + 1) % phrasesSec2.length;
-          elSec2.textContent = phrasesSec2[currentSec2];
-          elSec2.classList.remove("fade-out");
-        }, 600);
-      }, 3500);
+    // =========================
+    // HERO rotating lines (EN-only, iShare-aligned)
+    // =========================
+    startRotator("rotating-text", [
+      "Immersive VR storytelling that builds donor trust.",
+      "Turn architectural plans into experiences donors can explore.",
+      "AI-powered digital twinning for transparent stewardship.",
+      "Help donors understand impact—space by space.",
+      "Make naming opportunities tangible and easy to evaluate.",
+      "The medium becomes the message—make it immersive.",
+      "Engage stakeholders with clarity, emotion, and precision.",
+      "Transform interest into informed, meaningful giving.",
+      "A microsite tailored to guide donors to what matters most.",
+      "Bring your vision to life—inside a shareable experience."
+    ], 3500, 600);
 
-      // Side panel open/close
-      document.addEventListener("DOMContentLoaded", () => {
-        const panel = document.getElementById('side-panel');
-        const closeBtn = document.getElementById('close-panel');
-        const backdrop = document.getElementById('panel-backdrop');
+    // =========================
+    // SEC2 rotating lines (EN-only)
+    // =========================
+    startRotator("rotating-text-sec2", [
+      "Interactive virtual spaces",
+      "Immersive donor walkthroughs",
+      "Digital twin experiences",
+      "AI-driven explainer videos",
+      "Naming opportunities in context",
+      "Stakeholder engagement that scales"
+    ], 3500, 600);
 
-        document.querySelectorAll('.open-panel').forEach(btn => {
-          btn.addEventListener('click', function (e) {
-            e.preventDefault();
-            panel.classList.add('open');
-            backdrop.classList.add('visible');
-            document.body.classList.add('modal-open');
-          });
-        });
+    // =========================
+    // Side panel open/close (uses YOUR existing CSS: body.panel-open)
+    // =========================
+    const panel = document.getElementById("side-panel");
+    const closeBtn = document.getElementById("close-panel");
+    const backdrop = document.getElementById("panel-backdrop");
 
-        function closePanel() {
-          panel.classList.remove('open');
-          backdrop.classList.remove('visible');
-          document.body.classList.remove('modal-open');
-        }
+    function openPanel() {
+      document.body.classList.add("panel-open");
+      panel?.setAttribute("aria-hidden", "false");
+      backdrop?.setAttribute("aria-hidden", "false");
+      document.documentElement.style.overflow = "hidden";
+    }
 
-        closeBtn.addEventListener('click', closePanel);
-        backdrop.addEventListener('click', closePanel);
+    function closePanel() {
+      document.body.classList.remove("panel-open");
+      panel?.setAttribute("aria-hidden", "true");
+      backdrop?.setAttribute("aria-hidden", "true");
+      document.documentElement.style.overflow = "";
+    }
+
+    qsa(".open-panel").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        openPanel();
       });
+    });
 
-      // Cookie banner + modal
-      document.addEventListener("DOMContentLoaded", () => {
-        const banner = document.getElementById('cookie-banner');
-        const modal = document.getElementById('cookie-modal');
-        const overlay = document.getElementById('cookie-overlay');
+    closeBtn?.addEventListener("click", closePanel);
+    backdrop?.addEventListener("click", closePanel);
 
-        const accept = document.getElementById('accept-cookies');
-        const config = document.getElementById('config-cookies');
-        const reject = document.getElementById('reject-cookies');
-
-        const save = document.getElementById('save-settings');
-        const cancel = document.getElementById('cancel-settings');
-
-        if (!localStorage.getItem('cookiesDecision')) {
-          banner.classList.add('show');
-        }
-
-        accept.onclick = () => {
-          localStorage.setItem('cookiesDecision', JSON.stringify({
-            necessary: true,
-            analytics: true,
-            ads: true
-          }));
-          banner.classList.remove('show');
-        };
-
-        reject.onclick = () => {
-          localStorage.setItem('cookiesDecision', JSON.stringify({
-            necessary: true,
-            analytics: false,
-            ads: false
-          }));
-          banner.classList.remove('show');
-        };
-
-        config.onclick = () => {
-          modal.classList.add('show');
-          overlay.classList.add('show');
-        };
-
-        cancel.onclick = () => {
-          modal.classList.remove('show');
-          overlay.classList.remove('show');
-        };
-
-        save.onclick = () => {
-          const analytics = document.getElementById('analytics-cookies').checked;
-          const ads = document.getElementById('ads-cookies').checked;
-
-          localStorage.setItem('cookiesDecision', JSON.stringify({
-            necessary: true,
-            analytics: analytics,
-            ads: ads
-          }));
-
-          modal.classList.remove('show');
-          overlay.classList.remove('show');
-          banner.classList.remove('show');
-        };
-      });
-
-      // Cookie policy modal open/close
-      document.querySelectorAll('a[href="#politica-cookies"]').forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          document.getElementById('cookies-policy-modal').style.display = 'flex';
-        });
-      });
-
-      document.getElementById('close-policy-modal').addEventListener('click', () => {
-        document.getElementById('cookies-policy-modal').style.display = 'none';
-      });
-
-      // Conditional Google Analytics loading (only if consent.analytics === true)
-      function loadGoogleAnalytics() {
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-QGGREKNJDX';
-        document.head.appendChild(script);
-
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-QGGREKNJDX');
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && document.body.classList.contains("panel-open")) {
+        closePanel();
       }
+    });
 
-      document.addEventListener("DOMContentLoaded", () => {
-        const consent = JSON.parse(localStorage.getItem('cookiesDecision'));
-        if (consent && consent.analytics) {
-          loadGoogleAnalytics();
+    // =========================
+    // Cookie banner + modal
+    // =========================
+    const banner = document.getElementById("cookie-banner");
+    const modal = document.getElementById("cookie-modal");
+    const overlay = document.getElementById("cookie-overlay");
+
+    const accept = document.getElementById("accept-cookies");
+    const config = document.getElementById("config-cookies");
+    const reject = document.getElementById("reject-cookies");
+
+    const save = document.getElementById("save-settings");
+    const cancel = document.getElementById("cancel-settings");
+
+    if (banner && !localStorage.getItem("cookiesDecision")) {
+      banner.classList.add("show");
+    }
+
+    accept && (accept.onclick = () => {
+      localStorage.setItem("cookiesDecision", JSON.stringify({ necessary: true, analytics: true, ads: true }));
+      banner?.classList.remove("show");
+    });
+
+    reject && (reject.onclick = () => {
+      localStorage.setItem("cookiesDecision", JSON.stringify({ necessary: true, analytics: false, ads: false }));
+      banner?.classList.remove("show");
+    });
+
+    config && (config.onclick = () => {
+      modal?.classList.add("show");
+      overlay?.classList.add("show");
+    });
+
+    cancel && (cancel.onclick = () => {
+      modal?.classList.remove("show");
+      overlay?.classList.remove("show");
+    });
+
+    save && (save.onclick = () => {
+      const analytics = document.getElementById("analytics-cookies")?.checked ?? false;
+      const ads = document.getElementById("ads-cookies")?.checked ?? false;
+
+      localStorage.setItem("cookiesDecision", JSON.stringify({ necessary: true, analytics, ads }));
+      modal?.classList.remove("show");
+      overlay?.classList.remove("show");
+      banner?.classList.remove("show");
+    });
+
+    // =========================
+    // Cookie policy modal open/close (guarded)
+    // =========================
+    const policyModal = document.getElementById("cookies-policy-modal");
+    const policyClose = document.getElementById("close-policy-modal");
+
+    qsa('a[href="#politica-cookies"]').forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (policyModal) policyModal.style.display = "flex";
+      });
+    });
+
+    policyClose?.addEventListener("click", () => {
+      if (policyModal) policyModal.style.display = "none";
+    });
+
+    // =========================
+    // Conditional Google Analytics loading (only if consent.analytics === true)
+    // =========================
+    function loadGoogleAnalytics() {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = "https://www.googletagmanager.com/gtag/js?id=G-QGGREKNJDX";
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ window.dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-QGGREKNJDX");
+    }
+
+    try {
+      const consent = JSON.parse(localStorage.getItem("cookiesDecision"));
+      if (consent && consent.analytics) loadGoogleAnalytics();
+    } catch (_) {
+      // ignore malformed storage
+    }
+
+    // =========================
+    // Public offer modal open/close (guarded)
+    // =========================
+    const modalOferta = document.getElementById("modal-oferta");
+    const closeOferta = document.getElementById("close-oferta");
+
+    qsa(".open-oferta").forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (modalOferta) modalOferta.style.display = "flex";
+      });
+    });
+
+    closeOferta?.addEventListener("click", () => {
+      if (modalOferta) modalOferta.style.display = "none";
+    });
+
+    modalOferta?.addEventListener("click", (e) => {
+      if (e.target === modalOferta) modalOferta.style.display = "none";
+    });
+
+    // =========================
+    // Progress bar logic (checkbox-based sections only)
+    // =========================
+    function updateStepProgress() {
+      const sections = qsa(".form-section");
+      if (sections.length === 0) return;
+
+      const checkboxSections = sections.filter(sec => sec.querySelector('input[type="checkbox"]'));
+      const total = checkboxSections.length || 1;
+
+      let completed = 0;
+      checkboxSections.forEach(section => {
+        const checked = section.querySelectorAll('input[type="checkbox"]:checked').length;
+        if (checked > 0) completed++;
+      });
+
+      const percent = Math.round((completed / total) * 100);
+      const bar = document.getElementById("progress-bar");
+      const text = document.getElementById("progress-text");
+
+      if (bar) bar.style.width = `${percent}%`;
+      if (text) text.textContent = `${percent}% completed`;
+    }
+
+    updateStepProgress();
+    qsa('.form-section input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener("change", updateStepProgress);
+    });
+
+    // =========================
+    // "Other" input toggles (reusable)
+    // Usage: connectOtherToggle("negocioOtroCheckbox", "negocioOtroWrapper")
+    // =========================
+    function connectOtherToggle(checkboxId, wrapperId) {
+      const cb = document.getElementById(checkboxId);
+      const wrap = document.getElementById(wrapperId);
+      if (!cb || !wrap) return;
+
+      const sync = () => {
+        wrap.style.display = cb.checked ? "block" : "none";
+        if (!cb.checked) {
+          const input = wrap.querySelector("input, textarea");
+          if (input) input.value = "";
         }
-      });
-
-      // Public offer modal open/close
-      document.addEventListener('DOMContentLoaded', () => {
-        const ofertaLinks = document.querySelectorAll('.open-oferta');
-        const modalOferta = document.getElementById('modal-oferta');
-        const closeOferta = document.getElementById('close-oferta');
-
-        ofertaLinks.forEach(link => {
-          link.addEventListener('click', e => {
-            e.preventDefault();
-            modalOferta.style.display = 'flex';
-          });
-        });
-
-        closeOferta.addEventListener('click', () => {
-          modalOferta.style.display = 'none';
-        });
-
-        modalOferta.addEventListener('click', (e) => {
-          if (e.target === modalOferta) {
-            modalOferta.style.display = 'none';
-          }
-        });
-      });
-
-      // Progress bar logic
-      function updateStepProgress() {
-        const sections = document.querySelectorAll('.form-section');
-        let completed = 0;
-
-        sections.forEach(section => {
-          const checked = section.querySelectorAll('input[type="checkbox"]:checked').length;
-          if (checked > 0) completed++;
-        });
-
-        const percent = Math.round((completed / sections.length) * 100);
-        const bar = document.getElementById('progress-bar');
-        const text = document.getElementById('progress-text');
-
-        if (bar) bar.style.width = `${percent}%`;
-        if (text) text.textContent = `${percent}% completed`;
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
         updateStepProgress();
-        document.querySelectorAll('.form-section input[type="checkbox"]').forEach(cb => {
-          cb.addEventListener('change', updateStepProgress);
-        });
-      });
+      };
 
-      // "Other" input toggle
-      const otroCheckbox = document.getElementById('otroCheckbox');
-      const otroInputWrapper = document.getElementById('otroInputWrapper');
+      cb.addEventListener("change", sync);
+      sync();
+    }
 
-      if (otroCheckbox && otroInputWrapper) {
-        otroCheckbox.addEventListener('change', function () {
-          otroInputWrapper.style.display = this.checked ? 'block' : 'none';
-        });
+    connectOtherToggle("negocioOtroCheckbox", "negocioOtroWrapper");
+    connectOtherToggle("espacioOtroCheckbox", "espacioOtroWrapper");
+    connectOtherToggle("serviciosOtroCheckbox", "serviciosOtroWrapper");
+
+    // =========================
+    // Mobile menu open/close (matches your existing CSS: body.mobile-open)
+    // =========================
+    const burger = document.getElementById("burger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileClose = document.getElementById("mobileClose");
+    const mobileBackdrop = document.getElementById("mobileBackdrop");
+
+    function openMobileMenu() {
+      document.body.classList.add("mobile-open");
+      burger?.setAttribute("aria-expanded", "true");
+      mobileMenu?.setAttribute("aria-hidden", "false");
+      setTimeout(() => mobileClose?.focus(), 0);
+    }
+
+    function closeMobileMenu() {
+      burger?.focus();
+      document.body.classList.remove("mobile-open");
+      burger?.setAttribute("aria-expanded", "false");
+      setTimeout(() => mobileMenu?.setAttribute("aria-hidden", "true"), 0);
+    }
+
+    burger?.addEventListener("click", openMobileMenu);
+    mobileClose?.addEventListener("click", closeMobileMenu);
+    mobileBackdrop?.addEventListener("click", closeMobileMenu);
+
+    qsa(".m-link").forEach(a => a.addEventListener("click", closeMobileMenu));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && document.body.classList.contains("mobile-open")) {
+        closeMobileMenu();
       }
+    });
 
-      // Mobile menu open/close
-      document.addEventListener("DOMContentLoaded", () => {
-        const burger = document.getElementById("burger");
-        const mobileMenu = document.getElementById("mobileMenu");
-        const mobileClose = document.getElementById("mobileClose");
-        const mobileBackdrop = document.getElementById("mobileBackdrop");
+  });
+</script>
 
-        function openMobileMenu() {
-          document.body.classList.add("mobile-open");
-          burger?.setAttribute("aria-expanded", "true");
-          mobileMenu?.setAttribute("aria-hidden", "false");
-          setTimeout(() => mobileClose?.focus(), 0);
-        }
-
-        function closeMobileMenu() {
-          burger?.focus();
-          document.body.classList.remove("mobile-open");
-          burger?.setAttribute("aria-expanded", "false");
-          setTimeout(() => {
-            mobileMenu?.setAttribute("aria-hidden", "true");
-          }, 0);
-        }
-
-        burger?.addEventListener("click", openMobileMenu);
-        mobileClose?.addEventListener("click", closeMobileMenu);
-        mobileBackdrop?.addEventListener("click", closeMobileMenu);
-
-        document.querySelectorAll(".m-link").forEach(a => {
-          a.addEventListener("click", closeMobileMenu);
-        });
-
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") closeMobileMenu();
-        });
-      });
-    </script>
 
   </div>
 </body>
