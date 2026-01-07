@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>iShare® – Immersive VR & AI for Charities</title>
+  <title>iShare® – Immersive VR & AI for Campaigns</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
@@ -521,7 +521,7 @@ header.topbar.compact{
   position:fixed;
   inset:0;
   background: rgba(0,0,0,.4);
-  z-index:1000;
+  z-index:2000;
   opacity:0;
   visibility:hidden;
   transition: opacity .3s ease;
@@ -539,7 +539,7 @@ header.topbar.compact{
   height:100vh;
   background:#fff;
   color:#000;
-  z-index:1001;
+  z-index:200000;
   transition: right .4s ease;
   box-shadow:-2px 0 8px rgba(0,0,0,.3);
   display:flex;
@@ -1052,6 +1052,8 @@ body.modal-open{
   z-index: 9999;
 }
 
+
+
 .nav-menu a{
   display: block;
   padding: 10px 12px;
@@ -1323,6 +1325,9 @@ header.topbar{
   .utility-link{ padding: 6px 10px; }
 }
 
+
+
+
   </style>
 </head>
 
@@ -1393,21 +1398,39 @@ header.topbar{
          aria-haspopup="true"
          aria-expanded="false"
          aria-controls="directionsMenu">
-        Directions <span class="nav-arrow">▾</span>
+        Campaigns <span class="nav-arrow">▾</span>
       </a>
 
-      <div class="nav-menu" id="directionsMenu" role="menu" aria-label="Directions submenu">
-        <a role="menuitem" href="#healthcare">Healthcare</a>
-        <a role="menuitem" href="#education">Education</a>
-        <a role="menuitem" href="#museums">Museums</a>
-        <a role="menuitem" href="#social">Social Projects</a>
-        <a role="menuitem" href="#ecology">Ecology</a>
-        <a role="menuitem" href="#humanitarian">Humanitarian Aid</a>
-      </div>
+      <div class="nav-menu" id="directionsMenu" role="menu" aria-label="Campaigns submenu">
+  <a role="menuitem" href="#healthcare">Healthcare</a>
+  <a role="menuitem" href="#education">Education</a>
+  <a role="menuitem" href="#culture">Culture</a>
+  <a role="menuitem" href="#sporting-venues">Sporting Venues</a>
+  <a role="menuitem" href="#international-aid">International Aid</a>
+  <a role="menuitem" href="#social-services">Social Services</a>
+  <a role="menuitem" href="#tourism">Tourism</a>
+</div>
+
     </div>
 
     <a href="#projects">Projects</a>
-    <a href="#technology">Technology</a>
+    <!-- Packages dropdown -->
+<div class="nav-dropdown" id="packagesDropdown">
+  <a href="#pricing"
+     class="nav-parent"
+     aria-haspopup="true"
+     aria-expanded="false"
+     aria-controls="packagesMenu">
+    Packages <span class="nav-arrow">▾</span>
+  </a>
+
+  <div class="nav-menu" id="packagesMenu" role="menu" aria-label="Packages submenu">
+    <a role="menuitem" href="#pricing-basic">Basic</a>
+    <a role="menuitem" href="#pricing-pro">Pro</a>
+    <a role="menuitem" href="#pricing-enterprise">Enterprise</a>
+  </div>
+</div>
+
     <a href="#impact">Impact</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -1459,9 +1482,9 @@ header.topbar{
 
     <a href="#hero" class="m-link">Home</a>
     <a href="#about" class="m-link">About</a>
-    <a href="#directions" class="m-link">Directions</a>
+    <a href="#directions" class="m-link">Campaigns</a>
     <a href="#projects" class="m-link">Projects</a>
-    <a href="#technology" class="m-link">Technology</a>
+    <a href="#pricing" class="m-link">Packages</a>
     <a href="#impact" class="m-link">Impact</a>
     <a href="#contact" class="m-link">Contact</a>
 
@@ -1547,7 +1570,7 @@ header.topbar{
           <div class="hero-copy">
 
             <h1 class="hero-title">
-              iShare® — Immersive VR & AI for Charities
+              iShare® — Immersive VR & AI for Campaigns
             </h1>
 
             <p class="hero-subtitle">
@@ -1784,7 +1807,7 @@ header.topbar{
 
         <p>
           Marshall McLuhan was right: the medium becomes the message when communication truly lands.
-          Charities need the right tools to communicate mission, need, and impact — and to steward lasting donor relationships.
+          Campaigns need the right tools to communicate mission, need, and impact — and to steward lasting donor relationships.
         </p>
 
         <p>
@@ -1989,42 +2012,40 @@ header.topbar{
       "Stakeholder engagement that scales"
     ], 3500, 600);
 
-    // =========================
-    // Side panel open/close (uses YOUR existing CSS: body.panel-open)
-    // =========================
-    const panel = document.getElementById("side-panel");
-    const closeBtn = document.getElementById("close-panel");
-    const backdrop = document.getElementById("panel-backdrop");
+   // ✅ FIX: your CSS expects #side-panel.open and #panel-backdrop.visible
+// but JS was only adding body.panel-open (which doesn't open anything)
 
-    function openPanel() {
-      document.body.classList.add("panel-open");
-      panel?.setAttribute("aria-hidden", "false");
-      backdrop?.setAttribute("aria-hidden", "false");
-      document.documentElement.style.overflow = "hidden";
-    }
+const panel = document.getElementById("side-panel");
+const closeBtn = document.getElementById("close-panel");
+const backdrop = document.getElementById("panel-backdrop");
 
-    function closePanel() {
-      document.body.classList.remove("panel-open");
-      panel?.setAttribute("aria-hidden", "true");
-      backdrop?.setAttribute("aria-hidden", "true");
-      document.documentElement.style.overflow = "";
-    }
+function openPanel() {
+  document.body.classList.add("modal-open");
+  document.getElementById("side-panel")?.classList.add("open");
+  document.getElementById("panel-backdrop")?.classList.add("visible");
+}
 
-    qsa(".open-panel").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        openPanel();
-      });
-    });
+function closePanel() {
+  document.body.classList.remove("modal-open");
+  document.getElementById("side-panel")?.classList.remove("open");
+  document.getElementById("panel-backdrop")?.classList.remove("visible");
+}
 
-    closeBtn?.addEventListener("click", closePanel);
-    backdrop?.addEventListener("click", closePanel);
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && document.body.classList.contains("panel-open")) {
-        closePanel();
-      }
-    });
+document.querySelectorAll(".open-panel").forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    openPanel();
+  });
+});
+
+closeBtn?.addEventListener("click", closePanel);
+backdrop?.addEventListener("click", closePanel);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closePanel();
+});
+
 
     // =========================
     // Cookie banner + modal
